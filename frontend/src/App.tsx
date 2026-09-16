@@ -1,10 +1,11 @@
 import { useState, type FormEvent } from "react";
 import Encabezado from "./components/Encabezado";
 import logoMpb from "./assets/logo-mpb.jpg";
+import { iniciarSesion } from "./services/api";
 
 function App() {
-  // Estado para controlar el campo de correo institucional.
-  const [correo, setCorreo] = useState("");
+  // Estado para controlar el usuario institucional.
+  const [login, setLogin] = useState("");
 
   // Estado para controlar el campo de contraseña.
   const [contrasena, setContrasena] = useState("");
@@ -16,32 +17,66 @@ function App() {
   const [mensajeExito, setMensajeExito] = useState("");
 
   // Función que procesa el inicio de sesión.
-  // Esta validación es del frontend; la validación real con FastAPI se hará después.
-  function manejarInicioSesion(evento: FormEvent<HTMLFormElement>) {
+  async function manejarInicioSesion(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault();
 
+    // Limpiamos los mensajes anteriores.
     setMensajeError("");
     setMensajeExito("");
 
-    const correoLimpio = correo.trim();
+    // Eliminamos espacios innecesarios.
+    const loginLimpio = login.trim();
     const contrasenaLimpia = contrasena.trim();
 
-    if (!correoLimpio) {
-      setMensajeError("Debe ingresar su correo institucional.");
+    // ----------------------------------------------------------
+    // VALIDAR USUARIO
+    // ----------------------------------------------------------
+
+    if (!loginLimpio) {
+      setMensajeError("Debe ingresar su usuario institucional.");
       return;
     }
+
+    // ----------------------------------------------------------
+    // VALIDAR CONTRASEÑA
+    // ----------------------------------------------------------
 
     if (!contrasenaLimpia) {
       setMensajeError("Debe ingresar su contraseña.");
       return;
     }
 
-    if (!correoLimpio.toLowerCase().endsWith("@munibarranca.gob.pe")) {
-      setMensajeError("Debe utilizar un correo institucional terminado en @munibarranca.gob.pe.");
-      return;
-    }
+    // ----------------------------------------------------------
+    // ENVIAR CREDENCIALES A FASTAPI
+    // ----------------------------------------------------------
 
-    setMensajeExito("Los datos fueron validados. Próximamente se conectará con FastAPI.");
+    try {
+      const resultado = await iniciarSesion({
+        login: loginLimpio,
+        contrasena: contrasenaLimpia,
+      });
+
+      // --------------------------------------------------------
+      // LOGIN INCORRECTO
+      // --------------------------------------------------------
+
+      if (!resultado.autenticado) {
+        setMensajeError(resultado.mensaje);
+        return;
+      }
+
+      // --------------------------------------------------------
+      // LOGIN CORRECTO
+      // --------------------------------------------------------
+
+      setMensajeExito(
+        `Bienvenido, ${resultado.usuario?.nombres}. Rol: ${resultado.usuario?.rol}`,
+      );
+    } catch (error) {
+      console.error(error);
+
+      setMensajeError("No se pudo conectar con el servidor.");
+    }
   }
 
   return (
@@ -54,7 +89,9 @@ function App() {
               alt="Logo de la Municipalidad Provincial de Barranca"
               className="brand-logo"
             />
-            <span className="brand-badge">Municipalidad Provincial de Barranca</span>
+            <span className="brand-badge">
+              Municipalidad Provincial de Barranca
+            </span>
           </div>
 
           <div className="brand-copy">
@@ -73,17 +110,18 @@ function App() {
             <p className="eyebrow">Acceso al sistema</p>
             <h2>Bienvenido</h2>
             <p>
-              Inicia sesión para registrar o consultar tus solicitudes de soporte.
+              Inicia sesión para registrar o consultar tus solicitudes de
+              soporte.
             </p>
 
             <form className="login-form" onSubmit={manejarInicioSesion}>
               <label>
-                <span>Correo institucional</span>
+                <span>Usuario institucional</span>
                 <input
-                  type="email"
-                  value={correo}
-                  onChange={(evento) => setCorreo(evento.target.value)}
-                  placeholder="usuario@munibarranca.gob.pe"
+                  type="text"
+                  value={login}
+                  onChange={(evento) => setLogin(evento.target.value)}
+                  placeholder="Ingrese su usuario"
                 />
               </label>
 
@@ -104,6 +142,7 @@ function App() {
                 <button type="submit" className="boton-principal">
                   Iniciar sesión
                 </button>
+
                 <a href="#" className="link-recuperar">
                   ¿Olvidaste tu contraseña?
                 </a>
