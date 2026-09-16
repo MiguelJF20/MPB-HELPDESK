@@ -1,0 +1,438 @@
+:root {
+  --mpb-verde-900: #0c5f2d;
+  --mpb-verde-700: #1d8d4a;
+  --mpb-verde-600: #2a9a52;
+  --mpb-verde-100: #edf9f0;
+  --mpb-dorado: #d9b64d;
+  --mpb-dorado-oscuro: #b78a26;
+  --mpb-gris-50: #f6f8fb;
+  --mpb-gris-200: #dfe7f4;
+  --mpb-gris-700: #334155;
+  --mpb-blanco: #ffffff;
+  --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #edf9f0 0%, #dff3e4 38%, #f7faf7 100%);
+  color: var(--mpb-gris-700);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.contenedor-principal {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+}
+
+.login-page {
+  background:
+    radial-gradient(circle at top left, rgba(217, 182, 77, 0.18), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(12, 95, 45, 0.12), transparent 30%),
+    linear-gradient(135deg, #edf9f0 0%, #dfeee2 35%, #f7faf7 100%);
+}
+
+.login-shell {
+  width: min(1100px, 100%);
+  min-height: 680px;
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  background: var(--mpb-blanco);
+}
+
+.login-panel {
+  padding: 36px 34px;
+}
+
+.login-panel-brand {
+  background: linear-gradient(160deg, var(--mpb-verde-900) 0%, var(--mpb-verde-700) 100%);
+  color: var(--mpb-blanco);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.login-panel-brand::after {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+}
+
+.brand-block,
+.brand-copy {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================
+   BLOQUE DE IDENTIDAD INSTITUCIONAL
+   ========================================================= */
+.brand-block {
+  /* Activamos Flexbox para organizar sus elementos. */
+  display: flex;
+
+  /* Colocamos los elementos verticalmente:
+     primero el logo y después el nombre institucional. */
+  flex-direction: column;
+
+  /* Centramos horizontalmente el logo y el texto. */
+  align-items: center;
+
+  /* Centramos el contenido dentro del bloque. */
+  justify-content: center;
+
+  /* Alineamos el texto en el centro. */
+  text-align: center;
+
+  /* Espacio entre el logo y el nombre de la municipalidad. */
+  gap: 18px;
+
+  /* Separamos este bloque del título "MPB HelpDesk". */
+  margin-bottom: 54px;
+
+  /* El bloque ocupa todo el ancho disponible. */
+  width: 100%;
+}
+
+/* =========================================================
+   LOGO DE LA MUNICIPALIDAD
+   ========================================================= */
+.brand-logo {
+  /* Ancho del logo. */
+  width: 250px;
+
+  /* Alto del logo. */
+  height: 250px;
+
+  /* Evitamos que la imagen se deforme. */
+  object-fit: contain;
+
+  /* Redondeamos las esquinas del contenedor del logo. */
+  border-radius: 20px;
+
+  /* Fondo ligeramente transparente. */
+  background: rgba(255, 255, 255, 0.08);
+
+  /* Espacio interno alrededor de la imagen. */
+  padding: 10px;
+
+  /* Sombra para destacar el logo sobre el fondo verde. */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+
+  /* Garantizamos que la imagen se comporte como bloque. */
+  display: block;
+
+  /* Centramos horizontalmente la imagen. */
+  margin: 0 auto;
+}
+
+/* =========================================================
+   NOMBRE DE LA MUNICIPALIDAD
+   ========================================================= */
+.brand-badge {
+  /* El texto ocupa su propia línea. */
+  display: block;
+
+  /* Tamaño del texto institucional. */
+  font-size: 0.8rem;
+
+  /* Espaciado entre las letras. */
+  letter-spacing: 0.08em;
+
+  /* Mostramos el nombre en mayúsculas. */
+  text-transform: uppercase;
+
+  /* Aplicamos negrita. */
+  font-weight: 700;
+
+  /* Color claro para contrastar con el fondo verde. */
+  color: #ecf9f1;
+
+  /* Centramos el nombre debajo del logo. */
+  text-align: center;
+
+  /* Permitimos que el texto se adapte a pantallas pequeñas. */
+  max-width: 360px;
+
+  /* Mejoramos la separación entre líneas. */
+  line-height: 1.5;
+}
+
+/* =========================================================
+   TÍTULO Y DESCRIPCIÓN DEL SISTEMA
+   ========================================================= */
+.brand-copy {
+  /* El contenido ocupa todo el ancho disponible. */
+  width: 100%;
+
+  /* Alineamos el título y la descripción hacia la izquierda. */
+  text-align: left;
+
+  /* Permitimos que el contenido quede por encima
+     del borde decorativo del panel. */
+  position: relative;
+
+  /* Colocamos el contenido delante del pseudo-elemento. */
+  z-index: 1;
+}
+
+.brand-copy h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  line-height: 1.05;
+}
+
+.brand-copy p {
+  margin: 0;
+  max-width: 420px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 1.05rem;
+}
+
+.login-panel-form {
+  background: var(--mpb-gris-50);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.encabezado {
+  width: 100%;
+  background: linear-gradient(90deg, var(--mpb-verde-900), var(--mpb-verde-700));
+  color: var(--mpb-blanco);
+  border-radius: 18px 18px 0 0;
+  padding: 22px 24px;
+  text-align: center;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.encabezado h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 2vw, 2.2rem);
+}
+
+.encabezado p {
+  margin: 8px 0 0;
+  opacity: 0.9;
+  font-size: 0.96rem;
+}
+
+.tarjeta-bienvenida {
+  width: 100%;
+  background: var(--mpb-blanco);
+  border-radius: 0 0 18px 18px;
+  padding: 30px 26px 24px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--mpb-dorado-oscuro);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.tarjeta-bienvenida h2 {
+  margin: 0 0 10px;
+  color: var(--mpb-verde-900);
+  font-size: clamp(2rem, 2.5vw, 2.6rem);
+}
+
+.tarjeta-bienvenida p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--mpb-gris-700);
+}
+
+.login-form {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.login-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--mpb-gris-700);
+}
+
+.login-form input {
+  width: 100%;
+  border: 1.5px solid var(--mpb-gris-200);
+  background: var(--mpb-gris-50);
+  border-radius: 12px;
+  padding: 13px 14px;
+  color: var(--mpb-gris-700);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-form input:focus {
+  border-color: var(--mpb-verde-600);
+  box-shadow: 0 0 0 4px rgba(42, 154, 82, 0.12);
+}
+
+.login-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+/* =========================================================
+   BOTÓN PRINCIPAL
+   ========================================================= */
+.boton-principal {
+  /* Eliminamos el borde predeterminado. */
+  border: none;
+
+  /* Redondeamos las esquinas del botón. */
+  border-radius: 12px;
+
+  /* Espacio interno vertical y horizontal. */
+  padding: 14px 22px;
+
+  /* Fondo dorado institucional. */
+  background: linear-gradient(
+    135deg,
+    var(--mpb-dorado) 0%,
+    var(--mpb-dorado-oscuro) 100%
+  );
+
+  /* Usamos una variable que sí está declarada en :root. */
+  color: var(--mpb-verde-900);
+
+  /* Texto en negrita. */
+  font-weight: 800;
+
+  /* Separación ligera entre letras. */
+  letter-spacing: 0.02em;
+
+  /* Cambiamos el cursor al pasar sobre el botón. */
+  cursor: pointer;
+
+  /* Animamos el movimiento y la sombra. */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  /* Sombra del botón. */
+  box-shadow: 0 10px 22px rgba(212, 175, 55, 0.28);
+}
+
+.boton-principal:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(182, 138, 26, 0.28);
+}
+
+.link-recuperar {
+  color: var(--mpb-verde-700);
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+}
+
+.link-recuperar:hover {
+  text-decoration: underline;
+}
+
+.mensaje-error {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.mensaje-exito {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #dcfce7;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .login-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .login-panel-brand {
+    min-height: 260px;
+  }
+}
+
+/* =========================================================
+   DISEÑO PARA CELULARES
+   ========================================================= */
+@media (max-width: 520px) {
+  /* Reducimos el espacio exterior de la página. */
+  .contenedor-principal {
+    padding: 16px;
+  }
+
+  /* Reducimos el espacio interno de cada panel. */
+  .login-panel {
+    padding: 24px 18px;
+  }
+
+  /* Mantenemos el logo y el nombre centrados
+     también en pantallas pequeñas. */
+  .brand-block {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  /* Reducimos ligeramente el tamaño del logo. */
+  .brand-logo {
+    width: 90px;
+    height: 90px;
+  }
+
+  /* Reducimos el tamaño del nombre institucional. */
+  .brand-badge {
+    font-size: 0.7rem;
+    max-width: 280px;
+  }
+
+  /* Ajustamos el tamaño del título principal. */
+  .brand-copy h1 {
+    font-size: 2.3rem;
+  }
+}

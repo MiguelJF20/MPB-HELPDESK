@@ -1,0 +1,25 @@
+# Python / FastAPI
+backend/venv/
+backend/.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Variables de entorno
+.env
+.env.*
+
+# Node / React / Vite
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Visual Studio Code
+.vscode/
+
+# Sistema operativo
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
