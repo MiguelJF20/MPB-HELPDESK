@@ -1,7 +1,10 @@
 import { useState, type FormEvent } from "react";
 import Encabezado from "./components/Encabezado";
 import logoMpb from "./assets/logo-mpb.jpg";
-import { iniciarSesion } from "./services/api";
+import { iniciarSesion, type UsuarioAutenticado } from "./services/api";
+import PanelTecnico from "./pages/PanelTecnico";
+import PanelJefe from "./pages/PanelJefe";
+import PanelRegistrador from "./pages/PanelRegistrador";
 
 function App() {
   // Estado para controlar el usuario institucional.
@@ -15,6 +18,10 @@ function App() {
 
   // Estado para mostrar mensajes de éxito del frontend.
   const [mensajeExito, setMensajeExito] = useState("");
+
+  // Guarda los datos del usuario que inició sesión correctamente.
+  const [usuarioAutenticado, setUsuarioAutenticado] =
+    useState<UsuarioAutenticado | null>(null);
 
   // Función que procesa el inicio de sesión.
   async function manejarInicioSesion(evento: FormEvent<HTMLFormElement>) {
@@ -69,13 +76,42 @@ function App() {
       // LOGIN CORRECTO
       // --------------------------------------------------------
 
-      setMensajeExito(
-        `Bienvenido, ${resultado.usuario?.nombres}. Rol: ${resultado.usuario?.rol}`,
-      );
+      setUsuarioAutenticado(resultado.usuario!);
     } catch (error) {
       console.error(error);
 
       setMensajeError("No se pudo conectar con el servidor.");
+    }
+  }
+
+  // Si el usuario inició sesión correctamente,
+  // mostramos el panel del técnico.
+  // ============================================================
+  // MOSTRAR PANEL SEGÚN EL ROL
+  // ============================================================
+
+  if (usuarioAutenticado) {
+    switch (usuarioAutenticado.rol) {
+      case "Tecnico":
+        return <PanelTecnico usuario={usuarioAutenticado} />;
+
+      case "Jefe":
+        return <PanelJefe usuario={usuarioAutenticado} />;
+
+      case "Registrador":
+        return <PanelRegistrador usuario={usuarioAutenticado} />;
+
+      default:
+        return (
+          <main className="contenedor-principal">
+            <h1>Rol no configurado</h1>
+
+            <p>
+              El rol "{usuarioAutenticado.rol}" todavía no tiene un panel
+              asignado.
+            </p>
+          </main>
+        );
     }
   }
 
